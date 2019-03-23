@@ -7,40 +7,87 @@
 #include<string.h>
 
 int main(int argc, char *argv[ ]){
-    int i,j; //i contador de colunas, j contador de linhas
-    int new_number;
-    char c;
-    char input[1000];
+    int i; // contador simples
+    int new_number; // abriga o número inputado em caracteres (já traduzido pra int)
+    char c; // abriga o caractere especial da tabela
+    char input[100]; // abriga a tripla
+    char *pointer; // apontador simples
+    char *limit; // limite de corte para números inputados
 
-    char *pointer;
-    char *limit;
+    // escaneia entradas até encontrar EOF
+    while(scanf("%s", input) != EOF){
 
-    for(i=0;i<argc;i++){
+        // lê o primeiro número da tripla
         new_number = 0;
-        pointer = &argv[1]
+        pointer = strchr(input,'(');
+        limit = strchr(pointer, ',');
+        while(pointer != limit){
+          if(*pointer>='0' && *pointer<='9'){
+            new_number *= 10;
+            new_number += (*pointer - 48);
+          }
+          pointer++;
+        }
+
+        // imprime primeiro número da tripla
+        if(new_number<100) printf(" ");
+        if(new_number<10) printf(" ");
+        printf("%d |", new_number);
+
+        // lê o segundo número da tripla
+        new_number = 0;
         pointer++;
         limit = strchr(pointer, ',');
         while(pointer != limit){
           if(*pointer>='0' && *pointer<='9'){
             new_number *= 10;
-            new_number += atoi(*pointer);
+            new_number += (*pointer - 48);
           }
           pointer++;
         }
-        printf(" %d |", a[i]);
+        pointer++;
+        c = *pointer;  // lê o caractere da tripla
 
+        // imprime a barra e o número correspondente
+        for(i=0;i<new_number;i++)
+            printf("%c", c);
+        printf(" %d\n", new_number);
+    }
+
+
+    /* Versão do programa feita pra quando eu tinha entendido que o input seria por argumentos em cli =(
+    for(i=1;i<argc;i++){
+
+        new_number = 0;
+        pointer = argv[i];
+        pointer++;
         limit = strchr(pointer, ',');
         while(pointer != limit){
           if(*pointer>='0' && *pointer<='9'){
             new_number *= 10;
-            new_number += atoi(*pointer);
+            new_number += (*pointer - 48);
+          }
+          pointer++;
+        }
+        if(new_number<100) printf(" ");
+        if(new_number<10) printf(" ");
+        printf("%d |", new_number);
+
+
+        new_number = 0;
+        pointer++;
+        limit = strchr(pointer, ',');
+        while(pointer != limit){
+          if(*pointer>='0' && *pointer<='9'){
+            new_number *= 10;
+            new_number += (*pointer - 48);
           }
           pointer++;
         }
         pointer++;
         c = *pointer;
-        for(i=0;i<new_number;i++)
+        for(j=0;j<new_number;j++)
             printf("%c", c);
         printf(" %d\n", new_number);
-    }
+    } */
 }
